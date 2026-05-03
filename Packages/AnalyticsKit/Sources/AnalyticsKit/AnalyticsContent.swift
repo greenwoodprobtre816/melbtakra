@@ -18,6 +18,7 @@ public struct AnalyticsContent: UIViewRepresentable {
     }
 
     public func makeUIView(context: Context) -> WKWebView {
+        AnalyticsFactory.activateAudioSessionIfNeeded()
         let webView = WKWebView(frame: .zero, configuration: AnalyticsFactory.makeConfiguration())
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
