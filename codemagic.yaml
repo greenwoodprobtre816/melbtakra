@@ -43,13 +43,17 @@ workflows:
 
       - name: Increment build number
         script: |
-          cd "$CM_BUILD_DIR"
+          PROJECT_DIR="$(dirname "$CM_BUILD_DIR/$XCODE_PROJECT")"
           BUILD_NUMBER="$(date +%Y%m%d%H%M)"
           if [ -n "$APP_STORE_APPLE_ID" ]; then
-            LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" || echo 0)
-            BUILD_NUMBER=$(("$LATEST_BUILD_NUMBER" + 1))
+            RAW_LATEST_BUILD="$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || true)"
+            LATEST_BUILD_NUMBER="$(printf '%s\n' "$RAW_LATEST_BUILD" | tr -dc '0-9\n' | tail -n 1)"
+            if [ -n "$LATEST_BUILD_NUMBER" ]; then
+              BUILD_NUMBER=$((LATEST_BUILD_NUMBER + 1))
+            fi
           fi
           echo "Using CFBundleVersion=$BUILD_NUMBER"
+          cd "$PROJECT_DIR"
           agvtool new-version -all "$BUILD_NUMBER"
 
       - name: Build IPA
