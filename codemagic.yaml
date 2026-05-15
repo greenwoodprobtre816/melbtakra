@@ -1,6 +1,6 @@
 workflows:
   ios-testflight:
-    name: MelB Takraw Lab iOS TestFlight
+    name: Melb Takraw iOS TestFlight
     max_build_duration: 120
     instance_type: mac_mini_m2
 
@@ -10,12 +10,12 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.melb.takrawlab
+        bundle_identifier: com.takraw.melb.sportapp
       vars:
-        XCODE_PROJECT: "MelBTakrawLab.xcodeproj"
-        XCODE_SCHEME: "MelBTakrawLab"
-        BUNDLE_ID: "com.melb.takrawlab"
-        APP_STORE_APPLE_ID: "6765769092"
+        XCODE_PROJECT: "Apps/MelbTakraw/MelbTakraw.xcodeproj"
+        XCODE_SCHEME: "MelbTakraw"
+        BUNDLE_ID: "com.takraw.melb.sportapp"
+        APP_STORE_APPLE_ID: "6769767814"
       xcode: latest
       cocoapods: default
 
